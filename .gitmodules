@@ -1,0 +1,3 @@
+[submodule "libs/mondengine"]
+	path = libs/mondengine
+	url = https://github.com/DrMondGnu/MondEngine.git
