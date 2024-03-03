@@ -4,7 +4,9 @@ project(Nindo)
 set(CMAKE_CXX_STANDARD 23)
 add_subdirectory(libs/mondengine)
 
-add_executable(Nindo main.cpp)
+add_executable(Nindo main.cpp
+        player.cpp
+        player.h)
 
 target_link_libraries(Nindo PRIVATE MondEngine)
 
