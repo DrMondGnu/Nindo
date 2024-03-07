@@ -6,6 +6,8 @@
 #include "libs/mondengine/libs/util/stb_image.h"
 #include "engine/texture.h"
 #include "engine/shapes/rectangle.h"
+#include "engine/event/key_event.h"
+#include "test_object.h"
 
 mondengine::Texture2D loadTextureFromFile(const char *file, bool alpha)
 {
@@ -28,16 +30,25 @@ mondengine::Texture2D loadTextureFromFile(const char *file, bool alpha)
 
 void start_engine()
 {
-    mondengine::Log::init();
-    APP_INFO("Hello from spdlog");
-    auto* engine = new mondengine::Engine();
+    mondengine::Log::init(); // Init logger
+    APP_INFO("Hello from spdlog"); // Debug message
+    auto* engine = new mondengine::Engine(); // Init engine
 
+    // Create gameobjects
+    Texture2D playerTex = loadTextureFromFile("resources/Player.png", false);
+    auto* player = new Player(playerTex);
+    auto* testObject = new TestObject();
 
-//    Texture2D playerTex = loadTextureFromFile("resources/awesomeface.png", true);
-//    auto* player = new Player(playerTex);
-//    engine->AddGameObject(player);
-    engine->Start();
+    // Player key input callback
+    auto fn = [player](const Event& event) { return player->OnKeyInput((KeyEvent&)event); };
+    engine->AddEventConsumer(EventTyped(mondengine::EventCategoryKeyboard), fn);
+    // Add player tick and render callbacks
+    engine->AddTickObject(player);
+    engine->AddRenderObject(player);
 
+//    engine->AddRenderObject(testObject);
+
+    engine->Start(); // Start engine and game loop
 
 //    delete player;
     delete engine;

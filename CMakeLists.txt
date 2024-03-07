@@ -6,7 +6,9 @@ add_subdirectory(libs/mondengine)
 
 add_executable(Nindo main.cpp
         player.cpp
-        player.h)
+        player.h
+        test_object.cpp
+        test_object.h)
 
 target_link_libraries(Nindo PRIVATE MondEngine)
 
