@@ -11,21 +11,22 @@
 #include "engine/texture.h"
 #include "engine/graphics/vao.h"
 #include "engine/graphics/vbo.h"
+#include "engine/event/key_event.h"
+#include "engine/log.h"
+#include "engine/sprite.h"
 
 
 using namespace mondengine;
 using namespace graphics;
-class Player : public mondengine::IGameObject{
+class Player : public Sprite, public ITickObject{
 public:
-    explicit Player(Texture2D texture);
-    void Render(float lag) override;
-    void Tick() override;
-private:
-    glm::vec2 m_Pos;
-    glm::vec2 m_Size;
-    float rotation = 0.0f;
-    Texture2D m_Texture;
+    bool OnKeyInput(const KeyEvent& event);
+    explicit Player(Texture2D& texture);
 
+    void Tick() override;
+
+private:
+    glm::vec2 m_velocity;
 };
 
 
